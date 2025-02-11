@@ -4,12 +4,34 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
-  
   <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
   <style>
-    /* @theme{
-      --font-title: 'Oswald',san-serif;
-    } */
+    .slide-in {
+            transform: translateX(-100%);
+            animation: slideIn 2s forwards;
+        }
+
+        .slide-out {
+            animation: slideOut 2s forwards;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(-100%);
+            }
+            to {
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideOut {
+            from {
+                transform: translateX(0);
+            }
+            to {
+                transform: translateX(-100%);
+            }
+        }
   </style>
 </head>
 <body>
@@ -35,19 +57,23 @@
       <div class="px-10 xl:px-100 md:px-20 ">
         <h2 class="text-5xl font-bold my-4 text-white">Galaxy S23 Ultra</h2>
         <p class="text-2xl my-2 text-gray-500">Galaxy AI está aquí</p>
-        <button class="relative px-6 py-3 my-4 text-white font-bold bg-transparent overflow-hidden rounded-lg transition-colors duration-500 border border-gray-700 after:absolute after:inset-0 after:bg-white after:opacity-0 after:origin-left after:scale-x-0 after:transition-all after:duration-500 hover:text-black hover:after:scale-x-100 hover:after:opacity-100 z-10 after:-z-10">
+        <button id="openModal2" class="relative px-6 py-3 my-4 text-white font-bold bg-transparent overflow-hidden rounded-lg transition-colors duration-500 border border-gray-700 after:absolute after:inset-0 after:bg-white after:opacity-0 after:origin-left after:scale-x-0 after:transition-all after:duration-500 hover:text-black hover:after:scale-x-100 hover:after:opacity-100 z-10 after:-z-10"> 
           VER MAS
         </button>
+        <div id="modal2" class="fixed inset-0 bg-black text-white flex justify-center items-center opacity-0 invisible transition-opacity duration-500  z-99">
+          <div class="w-full h-full flex flex-col items-center justify-center bg-black slide-in">
+              <h1 class="text-4xl font-bold">Samsung Galaxy</h1>
+              <p class="mt-4 text-lg">Descubre la nueva generación de móviles Samsung.</p>
+              <button id="closeModal2" class="mt-6 px-6 py-2 bg-white text-black font-bold rounded">Cerrar</button>
+          </div>
+        </div>
       </div>
       <div class="text-center mt-110 py-10">
         <h2 class="text-3xl font-bold">Galaxy AI ✦ está aquí</h2>
-        <p class="mt-4 max-w-2xl mx-auto">Descubre la nueva era de la IA móvil con Galaxy AI. Potenciado por el
-          rendimiento avanzado del Galaxy S23 Ultra, lleva tu experiencia a otro nivel.</p>
+        <p class="mt-4 max-w-2xl mx-auto">Descubre la nueva era de la IA móvil con Galaxy AI. Potenciado por el rendimiento avanzado del Galaxy S23 Ultra, lleva tu experiencia a otro nivel.</p>
         <!-- Botón para mostrar el modal -->
-        <button id="openModal" class="relative px-6 py-3 text-white font-bold bg-transparent overflow-hidden rounded-lg transition-colors duration-500 border border-gray-700 after:absolute after:inset-0 after:bg-white after:opacity-0 after:origin-left after:scale-x-0 after:transition-all after:duration-500 hover:text-black hover:after:scale-x-100 hover:after:opacity-100 z-10 after:-z-10">
-          Ver Características
-        </button>
-        <div id="modal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden z-99 barra">
+        <button id="openModal" class="relative px-6 py-3 text-white font-bold bg-transparent overflow-hidden rounded-lg transition-colors duration-500 border border-gray-700 after:absolute after:inset-0 after:bg-white after:opacity-0 after:origin-left after:scale-x-0 after:transition-all after:duration-500 hover:text-black hover:after:scale-x-100 hover:after:opacity-100 z-10 after:-z-10">Ver Características</button>
+        <div id="modal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden z-99">
           <div class="bg-white p-6 rounded-lg shadow-lg w-120 text-black">
             <h2 class="text-xl font-bold mb-4">Características del Móvil</h2>
             <ul class="list-disc pl-5 space-y-2 list-none">
@@ -59,9 +85,7 @@
               <li><strong>Batería:</strong> 5000mAh con carga rápida</li>
               <li><strong>Sistema Operativo:</strong> Android 14</li>
             </ul>
-            <button id="closeModal" class="relative px-6 py-3 text-black font-bold bg-transparent overflow-hidden rounded-lg transition-colors duration-500 border border-gray-700 after:absolute after:inset-0 after:bg-black after:opacity-0 after:origin-left after:scale-x-0 after:transition-all after:duration-500 hover:text-white hover:after:scale-x-100 hover:after:opacity-100 z-10 after:-z-10">
-              Cerrar
-            </button>
+            <button id="closeModal" class="relative px-6 py-3 text-black font-bold bg-transparent overflow-hidden rounded-lg transition-colors duration-500 border border-gray-700 after:absolute after:inset-0 after:bg-black after:opacity-0 after:origin-left after:scale-x-0 after:transition-all after:duration-500 hover:text-white hover:after:scale-x-100 hover:after:opacity-100 z-10 after:-z-10">Cerrar</button>
           </div>
         </div>
       </div>
@@ -460,6 +484,26 @@
           modal.classList.add('hidden');
         }
       });
+        const openModal2 = document.getElementById("openModal2");
+        const closeModal2 = document.getElementById("closeModal2");
+        const modal2 = document.getElementById("modal2");
+        const modalContent2 = modal2.querySelector("div");
+
+        openModal2.addEventListener("click", () => {
+            modal2.classList.remove("opacity-0", "invisible");
+            modalContent2.classList.remove("slide-out");
+            modalContent2.classList.add("slide-in");
+            document.body.style.overflow="hidden"
+        });
+
+        closeModal2.addEventListener("click", () => {
+            modalContent2.classList.remove("slide-in");
+            modalContent2.classList.add("slide-out");
+            setTimeout(() => {
+                modal2.classList.add("opacity-0", "invisible");
+                document.body.style.overflow="";
+            }, 500);
+        });
   </script>
 
 </body>
